@@ -35,8 +35,14 @@ function firstPrompt() {
         // let employee = 
         if (response.initialOptions === 'View All Employees') {
             queryAllEmployees();
+        } else if (response.initialOptions === 'View All Departments') {
+            queryAllDepartments();
         } else if (response.initialOptions === 'Add Employee') {
             addEmployee();
+        } else if (response.initialOptions === 'Update Role') {
+            updateRole();
+        } else if (response.initialOptions === 'Add Role') {
+            addRole();
         }
     })
 }
@@ -54,10 +60,18 @@ function queryAllEmployees() {
     inner join management_db.employee as emp_manager
     on emp_manager.id = emp.manager_id`, function(err, res) {
         if (err) throw err;
-        for (let i = 0; i < res.length; i++) {
-            // console.log(res[i].emp_id + " | " + res[i].first_name + " | " + res[i].last_name + " | " + res[i].title + " | " + res[i].salary + " | " + res[i].department + " | " + res[i].manager);
-        }
+        // for (let i = 0; i < res.length; i++) {
+        //     // console.log(res[i].emp_id + " | " + res[i].first_name + " | " + res[i].last_name + " | " + res[i].title + " | " + res[i].salary + " | " + res[i].department + " | " + res[i].manager);
+        // }
         console.table(res)
+    });
+}
+
+function queryAllDepartments() {
+    connection.query(`SELECT * FROM DEPARTMENT`, function(err, res) {
+        if (err) throw err;
+        console.table(res)
+            // console.log(res);
     });
 }
 
@@ -66,13 +80,7 @@ function queryAllEmployees() {
 // SET column1 = value1, column2 = value2, ...
 // WHERE condition;
 
-// UPDATE table
-// SET 
-//     column1 = new_value1,
-//     column2 = new_value2,
-//     ...
-// WHERE
-//     condition;
+
 
 function addEmployee() {
 
@@ -111,14 +119,88 @@ function addEmployee() {
         })
 }
 
+function updateRole() {
+    inquirer.prompt([{
+                type: "input",
+                message: "Which employee's role do you want to update?",
+                name: "empRole"
+            },
+            {
+                type: "input",
+                message: "Please make your update to employee role?",
+                name: "roleUpdate"
+            },
+        ])
+        .then(function(res) {
+            let empRole = res.empRole;
+            let roleUpdate = res.roleUpdate;
+
+            connection.query(`UPDATE employee SET role_id = "${roleUpdate}" WHERE first_name = "${empRole}";`, function(err, res) {
+                if (err) {
+                    throw (err)
+                }
+                console.table(res);
+                firstPrompt();
+            });
+        })
+}
+
+function addRole() {
+    // let emptyDept = [];
+    inquirer.prompt([{
+                type: "input",
+                message: "What is the new role name?",
+                name: "newRoleName"
+            },
+            {
+                type: "input",
+                message: "What is the new role's salary?",
+                name: "newRoleSalary"
+            },
+            {
+                type: "input",
+                message: "What is the new role's department id?",
+                name: "newRoleDepartment"
+            },
+        ])
+        .then(function(res) {
+            let newRoleName = res.newRoleName;
+            let newRoleSalary = res.newRoleSalary;
+            let newRoleDepartment = res.newRoleDepartment;
+
+            // for (i = 0; i < res.length; i++) {
+            //     emptyDept.push(res[i].name);
+            // }
+
+            connection.query(`INSERT INTO role(title, salary, department_id) VALUES("${newRoleName}", "${newRoleSalary}", "${newRoleDepartment}");`, function(err, res) {
+                if (err) {
+                    throw (err)
+                }
+                console.table(res);
+                firstPrompt();
+            });
+        })
+}
+
+
+
+
+// console.log(emptyDept);
+
+
+// UPDATE Customers
+// SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+// WHERE CustomerID = 1;
+
+// USE AdventureWorks2014;  
+// GO  
+// UPDATE Person.Person  
+// SET ModifiedDate = GETDATE()
+
 // function viewEmployee() {
 
 // }
 
 // function addEmployee() {
-
-// }
-
-// function updateRole() {
 
 // }
