@@ -9,3 +9,9 @@ inner join management_db.department as dept
 on role.department_id = dept.id 
 inner join management_db.employee as emp_manager
 on emp_manager.id = emp.manager_id
+
+-- INSERT INTO role (title, salary, department_id)
+-- VALUES ("Business Analyst", "100000.77", "2"), ("Associate Engineer", "77777.77", "1"), ("CMO", "100000.22", "4"), ("Client Tech Lead", "88888.77", "3");
+
+-- INSERT INTO department (name)
+-- VALUES ("DEVOPS"), ("MARKETING"), ("ADMIN"), ("CLIENT");

@@ -37,8 +37,12 @@ function firstPrompt() {
             queryAllEmployees();
         } else if (response.initialOptions === 'View All Departments') {
             queryAllDepartments();
+        } else if (response.initialOptions === 'View All Roles') {
+            queryAllRoles();
         } else if (response.initialOptions === 'Add Employee') {
             addEmployee();
+        } else if (response.initialOptions === 'Add Department') {
+            addDepartment();
         } else if (response.initialOptions === 'Update Role') {
             updateRole();
         } else if (response.initialOptions === 'Add Role') {
@@ -71,7 +75,13 @@ function queryAllDepartments() {
     connection.query(`SELECT * FROM DEPARTMENT`, function(err, res) {
         if (err) throw err;
         console.table(res)
-            // console.log(res);
+    });
+}
+
+function queryAllRoles() {
+    connection.query(`SELECT * FROM role`, function(err, res) {
+        if (err) throw err;
+        console.table(res)
     });
 }
 
@@ -80,7 +90,24 @@ function queryAllDepartments() {
 // SET column1 = value1, column2 = value2, ...
 // WHERE condition;
 
+function addDepartment() {
+    inquirer.prompt([{
+            type: "input",
+            message: "What is the new department's name?",
+            name: "newDeptName"
+        }])
+        .then(function(res) {
+            let newDeptName = res.newDeptName;
 
+            connection.query(`INSERT INTO department(name) VALUES("${newDeptName}");`, function(err, res) {
+                if (err) {
+                    throw (err)
+                }
+                console.table(res);
+                firstPrompt();
+            });
+        })
+}
 
 function addEmployee() {
 

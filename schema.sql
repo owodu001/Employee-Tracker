@@ -32,8 +32,7 @@
 -- PRIMARY KEY(ID)
 -- );
 
--- INSERT INTO department (name)
--- VALUES ("DEVOPS"), ("MARKETING"), ("ADMIN"), ("CLIENT");
+
 
 -- CREATE TABLE role(
 -- id INT NOT NULL auto_increment,
@@ -43,8 +42,7 @@
 -- PRIMARY KEY(ID)
 -- );
 
--- INSERT INTO role (title, salary, department_id)
--- VALUES ("Business Analyst", "100000.77", "2"), ("Associate Engineer", "77777.77", "1"), ("CMO", "100000.22", "4"), ("Client Tech Lead", "88888.77", "3");
+
 
 -- CREATE TABLE employee(
 -- id INT NOT NULL auto_increment,
@@ -55,5 +53,3 @@
 -- PRIMARY KEY(ID)
 -- );
 
--- INSERT INTO employee (first_name, last_name, role_id, manager_id)
--- VALUES ("Brittany", "Bryant", "12", "1");
