@@ -47,6 +47,8 @@ function firstPrompt() {
             updateRole();
         } else if (response.initialOptions === 'Add Role') {
             addRole();
+        } else if (response.initialOptions === 'Exit') {
+            exit();
         }
     })
 }
@@ -68,20 +70,23 @@ function queryAllEmployees() {
         //     // console.log(res[i].emp_id + " | " + res[i].first_name + " | " + res[i].last_name + " | " + res[i].title + " | " + res[i].salary + " | " + res[i].department + " | " + res[i].manager);
         // }
         console.table(res)
+        firstPrompt()
     });
 }
 
 function queryAllDepartments() {
     connection.query(`SELECT * FROM DEPARTMENT`, function(err, res) {
         if (err) throw err;
-        console.table(res)
+        console.table(res);
+        firstPrompt();
     });
 }
 
 function queryAllRoles() {
     connection.query(`SELECT * FROM role`, function(err, res) {
         if (err) throw err;
-        console.table(res)
+        console.table(res);
+        firstPrompt();
     });
 }
 
