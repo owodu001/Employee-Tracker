@@ -26,7 +26,7 @@ function firstPrompt() {
     inquirer.prompt({
         type: "list",
         message: "What would you like to do?",
-        choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Role'],
+        choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Role', 'Exit'],
         name: "initialOptions"
     })
 
@@ -51,6 +51,11 @@ function firstPrompt() {
             exit();
         }
     })
+}
+
+function exit() {
+    connection.end()
+    process.exit()
 }
 
 function queryAllEmployees() {
@@ -159,7 +164,7 @@ function updateRole() {
             },
             {
                 type: "input",
-                message: "Please make your update to employee role?",
+                message: "Please make your update to employee role",
                 name: "roleUpdate"
             },
         ])
